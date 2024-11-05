@@ -4,7 +4,6 @@ const { createUniqueLink } = require('../controllers/createUniqueLink');
 
 const db = require('../models');
 const generateQRCode = require('../controllers/createQR');
-const { link } = require('fs');
 
 const linkRouter = express.Router();
 
@@ -46,7 +45,7 @@ linkRouter.post('/api/generateLink', (req, res, next) => {
         message: 'endpoints created successfully',
         origin: link,
         link: process.env.ROOT_NAME+ "/" + uniqueLink,
-        qrCode: process.env.ROOT_NAME+ "/media/qr/" + uniqueLink + ".png"
+        qrCode: process.env.ROOT_NAME+ "/media/qr/" + uniqueLink 
     })
 })
 
@@ -107,7 +106,6 @@ linkRouter.patch('/api/editLink', async (req, res, next) => {
             }
         })
 
-        console.log(linkInstance);
         linkInstance.url = newUrl;
         linkInstance.save();
 
@@ -128,19 +126,68 @@ linkRouter.get('/:shortUrl', async (req, res) => {
             }
         })
 
-        link1 = result.url;
+        link = result.url;
 
         result.views += 1;
         result.save();
 
-        res.redirect(link1);
+        res.redirect(link);
     } catch (err) {
-        console.log(err)
         res.status(404).json({
             status: 404,
             message: 'Not found'
         })
     }
+})
+
+linkRouter.get('/api/getStats', async (req, res, next) => {
+
+    if(!req.session.userId) {
+        return res.status(401).json({
+            status: 401,
+            message: 'Unauthorized'
+        })
+    }
+
+    const { shortUrl } = req.body;
+
+    if(!shortUrl) {
+        res.status(400).json({
+            status: 400,
+            message: "ShortUrl not entered"
+        })
+    }
+
+    try {
+        const linkInstance = await db.links.findOne({
+            where: {
+                shortUrl: shortUrl
+            }
+        })
+        
+        const user = await db.users.findOne({
+            where: {
+                id: linkInstance.creator_id
+            }
+        })
+
+        res.status(200).json({
+            status: 200,
+            creator_name: user.username,
+            shortUrl: shortUrl,
+            pointsAt: linkInstance.url,
+            views: linkInstance.views,
+            createdAt: Date(linkInstance.created_at),
+            updatedAt: Date(linkInstance.updated_at)
+        })
+        
+    } catch (err) {
+        res.status(404).json({
+            status: 404,
+            message: "not found"
+        })
+    }
+
 })
 
 module.exports = linkRouter

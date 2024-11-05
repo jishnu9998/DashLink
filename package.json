@@ -1,6 +1,6 @@
 {
   "name": "dashlink",
-  "version": "1.0.3-DEV",
+  "version": "1.0.0-ALPHA",
   "main": "index.js",
   "scripts": {
     "serve": "node app.js",

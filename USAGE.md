@@ -75,7 +75,7 @@ Example Response
 
 here's the example QR (points at localhost, so not usable by you):
 
-![QRCode](./controllers/public/dT9e2KtCD3.png)
+![QRCode](./public/7hPTarwLTh.png)
 
 ### `DELETE` /api/deleteLink
 
@@ -96,5 +96,53 @@ Example Response
 {
     "status": 200,
     "message": "endpoint deleted successfully"
+}
+```
+
+### `PATCH` /api/editLink
+
+#### Request Body
+
+##### JSON
+```json
+{
+    "shortUrl": "SCLuAZMpkn" // example endpoint
+}
+```
+
+#### Response
+
+Example Response
+
+```json
+{
+    "status": 200,
+    "message": "link updated successfully"
+}
+```
+
+### `GET` /api/getStats
+
+#### Request Body
+
+##### JSON
+```json
+{
+    "shortUrl": "SCLuAZMpkn" // example endpoint
+}
+```
+
+#### Response
+
+Example Response
+
+```json
+{
+    "status": 200,
+    "shortUrl": "SCLuAZMpkn" // example endpoint
+    "pointsAt": "https://github.com/izumicypherx",
+    "views": 3,
+    "createdAt": "Tue Nov 05 2024 20:21:05 GMT+0530 (India Standard Time)",
+    "updatedAt": "Tue Nov 05 2024 20:21:05 GMT+0530 (India Standard Time)"
 }
 ```

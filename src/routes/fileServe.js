@@ -6,8 +6,6 @@ const fileServer = express.Router();
 
 
 fileServer.get('/media/qr/:filename', (req, res, next) => {
-    
-    console.log("Entered the middleware");
     // Serve static files from public folder and return 404 if not found
 
     fileName = req.params.filename + ".png";
