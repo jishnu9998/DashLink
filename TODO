@@ -1,0 +1,2 @@
+- [COMPLETED] Fix issue with 'public' folder being generated inside controllers
+- [COMPLETED] Fix issue with infinite buffering when wrong resource being accessed from public
