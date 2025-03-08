@@ -11,7 +11,7 @@
     "dashlink",
     "self-hosted"
   ],
-  "author": "Sidhartha Rao",
+  "author": "Sidhartha Rao,Jishnu Ghosh",
   "license": "MIT",
   "description": "A no-BS link shortening service",
   "dependencies": {
